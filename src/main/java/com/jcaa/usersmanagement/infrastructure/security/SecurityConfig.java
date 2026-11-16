@@ -17,47 +17,51 @@ public class SecurityConfig {
   private static final String AUTH_LOGIN_PATH = "/api/auth/login";
   private static final String USERS_PATH = "/api/users";
   private static final String USERS_DETAIL_PATH = "/api/users/**";
+  private static final String NEWS_PATH = "/api/noticias";
+  private static final String NEWS_DETAIL_PATH = "/api/noticias/**";
   private static final String[] OPEN_API_PATHS = {
-    "/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**"
+          "/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**"
   };
 
   @Bean
   public SecurityFilterChain securityFilterChain(
-      final HttpSecurity http,
-      final JwtAuthenticationFilter jwtAuthenticationFilter,
-      final RestAuthenticationEntryPoint authenticationEntryPoint,
-      final RestAccessDeniedHandler accessDeniedHandler)
-      throws Exception {
+          final HttpSecurity http,
+          final JwtAuthenticationFilter jwtAuthenticationFilter,
+          final RestAuthenticationEntryPoint authenticationEntryPoint,
+          final RestAccessDeniedHandler accessDeniedHandler)
+          throws Exception {
     http.csrf(AbstractHttpConfigurer::disable)
-        .httpBasic(AbstractHttpConfigurer::disable)
-        .formLogin(AbstractHttpConfigurer::disable)
-        .sessionManagement(
-            session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-        .exceptionHandling(
-            handling ->
-                handling
-                    .authenticationEntryPoint(authenticationEntryPoint)
-                    .accessDeniedHandler(accessDeniedHandler))
-        .authorizeHttpRequests(
-            authorization ->
-                authorization
-                    .requestMatchers(HttpMethod.GET, "/health")
-                    .permitAll()
-                    .requestMatchers(AUTH_LOGIN_PATH)
-                    .permitAll()
-                    .requestMatchers(OPEN_API_PATHS)
-                    .permitAll()
-                    .requestMatchers(HttpMethod.POST, USERS_PATH)
-                    .permitAll()
-                    .requestMatchers(HttpMethod.GET, USERS_PATH, USERS_DETAIL_PATH)
-                    .hasAnyRole("ADMIN", "REVIEWER")
-                    .requestMatchers(HttpMethod.PUT, USERS_DETAIL_PATH)
-                    .hasRole("ADMIN")
-                    .requestMatchers(HttpMethod.DELETE, USERS_DETAIL_PATH)
-                    .hasRole("ADMIN")
-                    .anyRequest()
-                    .authenticated())
-        .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+            .httpBasic(AbstractHttpConfigurer::disable)
+            .formLogin(AbstractHttpConfigurer::disable)
+            .sessionManagement(
+                    session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .exceptionHandling(
+                    handling ->
+                            handling
+                                    .authenticationEntryPoint(authenticationEntryPoint)
+                                    .accessDeniedHandler(accessDeniedHandler))
+            .authorizeHttpRequests(
+                    authorization ->
+                            authorization
+                                    .requestMatchers(HttpMethod.GET, "/health")
+                                    .permitAll()
+                                    .requestMatchers(AUTH_LOGIN_PATH)
+                                    .permitAll()
+                                    .requestMatchers(OPEN_API_PATHS)
+                                    .permitAll()
+                                    .requestMatchers(HttpMethod.POST, USERS_PATH)
+                                    .permitAll()
+                                    .requestMatchers(HttpMethod.GET, USERS_PATH, USERS_DETAIL_PATH)
+                                    .hasAnyRole("ADMIN", "REVIEWER")
+                                    .requestMatchers(HttpMethod.PUT, USERS_DETAIL_PATH)
+                                    .hasRole("ADMIN")
+                                    .requestMatchers(HttpMethod.DELETE, USERS_DETAIL_PATH)
+                                    .hasRole("ADMIN")
+                                    .requestMatchers(NEWS_PATH, NEWS_DETAIL_PATH)
+                                    .authenticated()
+                                    .anyRequest()
+                                    .authenticated())
+            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
     return http.build();
   }
 }
