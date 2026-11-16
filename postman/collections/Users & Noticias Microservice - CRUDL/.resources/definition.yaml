@@ -1,0 +1,12 @@
+$kind: collection
+description: ""
+variables:
+  baseUrl: http://localhost:8080
+  token: ""
+  newsId: ""
+auth:
+  - id: 7a7a9043-3c0e-45d4-98cb-7eb380a112db
+    type: bearer
+    name: bearer auth
+    credentials:
+      token: "{{token}}"

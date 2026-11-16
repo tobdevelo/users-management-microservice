@@ -1,0 +1,21 @@
+$kind: http-request
+url: "{{baseUrl}}/api/noticias/{{newsId}}"
+method: PUT
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "categoria": "Innovación",
+      "fecha": "2026-11-15",
+      "pais": "Colombia",
+      "departamento": "Bolívar",
+      "ciudad": "Cartagena",
+      "periodista": "Jorge Taján",
+      "programaEmite": "Noticiero Caribe Tech",
+      "fechaEmision": "2026-11-15",
+      "descripcion": "Noticia actualizada desde Postman.",
+      "nivelPublico": "ESPECIALIZADO"
+    }
+order: 5000

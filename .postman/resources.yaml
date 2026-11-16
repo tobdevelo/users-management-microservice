@@ -1,0 +1,13 @@
+# Use this workspace to collaborate
+workspace:
+  id: 7959fc4f-5693-4acb-8fc1-b709a8fa902e
+
+cloudResources:
+  collections:
+    ../postman/collections/Users & Noticias Microservice - CRUDL: 849ae3a5-4393-49de-bd01-8269d30e85ec
+
+# All resources in the `postman/` folder are automatically registered in Local View.
+# Point to additional files outside the `postman/` folder to register them individually. Example:
+#localResources:
+#  collections:
+#    - ../tests/E2E Test Collection/

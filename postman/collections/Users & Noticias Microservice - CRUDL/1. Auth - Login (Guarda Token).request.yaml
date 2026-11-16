@@ -1,0 +1,21 @@
+$kind: http-request
+url: "{{baseUrl}}/api/auth/login"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "email": "jorge.tajan@gmail.com",
+      "password": "TU_PASSWORD"
+    }
+auth:
+  type: noauth
+scripts:
+  - type: afterResponse
+    code: |-
+      const res = pm.response.json();
+      if (res.accessToken) { pm.collectionVariables.set('token', res.accessToken); }
+    language: text/javascript
+order: 1000

@@ -1,0 +1,27 @@
+$kind: http-request
+url: "{{baseUrl}}/api/noticias"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "categoria": "Tecnología",
+      "fecha": "2026-11-15",
+      "pais": "Colombia",
+      "departamento": "Bolívar",
+      "ciudad": "Cartagena",
+      "periodista": "Jorge Taján",
+      "programaEmite": "Noticiero Caribe Tech",
+      "fechaEmision": "2026-11-15",
+      "descripcion": "Despliegue de microservicios con Arquitectura Hexagonal y Spring Boot.",
+      "nivelPublico": "GENERAL"
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      const res = pm.response.json();
+      if (res.id) { pm.collectionVariables.set('newsId', res.id); }
+    language: text/javascript
+order: 2000
